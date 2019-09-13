@@ -1,6 +1,5 @@
 <% include  partials/header.ejs %>
 
-<div class="container">
   <header>
     <div class="jumbotron bg-img">
       <div class="container">
@@ -14,10 +13,11 @@
       <% recipes.forEach(recipe => { %>
       <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
         <div class="card">
-          <img class="img-fluid card-img-top" src=<%= recipe.image %>>
+          <a href="/recipes/<%= recipe._id %>">
+            <img class="img-fluid card-img-top" src=<%= recipe.image %>>
+          </a>
           <div class="card-body">
             <h5 class="card-title"><%= recipe.name %></h5>
-            <a class="btn btn-secondary btn-sm" href="/recipes/<%= recipe._id %>">More Info</a>
             <a class="btn btn-info btn-sm" href=<%= recipe.article %>>See article</a>
           </div>
         </div>
@@ -26,6 +26,4 @@
     </div>
   </div>
 
-
   <% include  partials/footer.ejs %>
-</div>
