@@ -1,5 +1,5 @@
 <% include  partials/header.ejs %>
-<div class="container">
+
     <h1><%= recipe.name %></h1>
     <h2><%= recipe.article %></h2>
     <hr>
@@ -7,8 +7,8 @@
     <hr>
     <% if (recipe.ytId) { %>
         <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= recipe.ytId %>" allowfullscreen></iframe>
+            <iframe class="embed-responsive-item video" src="https://www.youtube.com/embed/<%= recipe.ytId %>" allowfullscreen></iframe>
         </div>
     <% } %>
-</div>
+    
 <% include  partials/footer.ejs %>
