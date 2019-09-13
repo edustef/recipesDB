@@ -1,0 +1,68 @@
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+.navbar a {
+  color: white;
+}
+.navbar a:hover {
+  color: gray;
+}
+.navbar + .container {
+  padding-top: 66px;
+}
+.full-page {
+  background-image: url(https://i.imgur.com/ZOQB0RX.jpg);
+  background-size: cover;
+  text-align: center;
+  height: 100vh;
+}
+.full-page > h1 {
+  font-size: 5em;
+  padding-top: 45vh;
+}
+.full-page > p {
+  font-size: 1.2rem;
+}
+header {
+  margin-bottom: 32px;
+}
+header .jumbotron,
+.full-page {
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.45);
+}
+header .jumbotron h1 {
+  font-weight: bold;
+}
+header .jumbotron p {
+  font-weight: lighter;
+  font-size: 1.18rem;
+}
+
+.bg-img {
+  background-image: url(https://i.imgur.com/ZOQB0RX.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right;
+}
+.card {
+  border: none;
+  border-radius: 25px;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 200ms;
+}
+.card:hover {
+  transform: scale(1.02);
+}
+.btn {
+  border-radius: 100px 100px 100px 100px;
+}
+
+.ytURLModal {
+  color: blue !important;
+}
+.ytURLModal:hover {
+  color: lightblue !important;
+  cursor: pointer;
+}

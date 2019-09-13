@@ -1,0 +1,64 @@
+<% include  partials/header.ejs %>
+
+<div class="container">
+  <h1>Create new recipe manually</h1>
+  <p class="alert alert-info">
+    Or if you have a <a class="ytURLModal" data-toggle="modal" data-target="#ytURLModal">YouTube URL</a> let me do the
+    work for
+    you!
+  </p>
+  <form action="/recipes" method="POST">
+    <div class="form-group">
+      <label for="name">Recipe name</label>
+      <input class="form-control" type="text" id="name" name="name" placeholder="Recipe name"><br>
+    </div>
+
+    <div class="form-group">
+      <label for="desc">Description</label>
+      <input class="form-control" type="text" name="desc" placeholder="Recipe description"><br>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Image URL</label>
+      <input class="form-control" type="text" name="image" placeholder="Image URL"><br>
+    </div>
+
+    <div class="form-group">
+      <label for="article">Article URL</label>
+      <input class="form-control" type="text" name="article" placeholder="Article URL"><br>
+    </div>
+
+    <button class="btn btn-primary">Submit!</button>
+  </form>
+  <hr>
+  <h1></h1>
+  <a class="btn btn-outline-primary btn-sm" href="/recipes">Go back</a>
+</div>
+
+<div class="modal fade" id="ytURLModal" tabindex="-1" role="dialog" aria-labelledby="Youtube URL" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Insert the YouTube URL of the recipe</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/recipes" method="POST">
+          <div class="form-group">
+            <label for="ytURL">YouTube URL</label>
+            <input class="form-control" type="text" name="ytURL" placeholder="YouTube URL"><br>
+          </div>
+          <button class="btn btn-primary">Submit!</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<% include  partials/footer.ejs %>

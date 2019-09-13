@@ -1,0 +1,31 @@
+<% include  partials/header.ejs %>
+
+<div class="container">
+  <header>
+    <div class="jumbotron bg-img">
+      <div class="container">
+        <h1>Welcome to RecipesDB!</h1>
+        <p>View our hand-picked delicious recipes!</p>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="row">
+      <% recipes.forEach(recipe => { %>
+      <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+        <div class="card">
+          <img class="img-fluid card-img-top" src=<%= recipe.image %>>
+          <div class="card-body">
+            <h5 class="card-title"><%= recipe.name %></h5>
+            <a class="btn btn-secondary btn-sm" href="/recipes/<%= recipe._id %>">More Info</a>
+            <a class="btn btn-info btn-sm" href=<%= recipe.article %>>See article</a>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+
+
+  <% include  partials/footer.ejs %>
+</div>

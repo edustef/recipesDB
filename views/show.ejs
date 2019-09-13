@@ -1,0 +1,9 @@
+<% include  partials/header.ejs %>
+<div class="container">
+    <h1><%= recipe.name %></h1>
+    <h2><%= recipe.article %></h2>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%= recipe.article %>" allowfullscreen></iframe>
+    </div>
+</div>
+<% include  partials/footer.ejs %>
