@@ -55,6 +55,10 @@ header .jumbotron p {
 .card:hover {
   transform: scale(1.02);
 }
+.card-img-top:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
 .btn {
   border-radius: 100px 100px 100px 100px;
 }
@@ -65,4 +69,7 @@ header .jumbotron p {
 .ytURLModal:hover {
   color: lightblue !important;
   cursor: pointer;
+}
+.video {
+  border-radius: 10px;
 }
