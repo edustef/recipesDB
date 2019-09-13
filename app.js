@@ -16,61 +16,11 @@ const recipeSchema = new mongoose.Schema({
   name: String,
   desc: String,
   image: String,
-  article: String
+  article: String,
+  ytId: String
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
-
-//#endregion Schema Setup
-
-//#region recipes arr
-// const recipes = [
-//   {
-//     name: 'Salmon Creek',
-//     image:
-//       'https://images.unsplash.com/photo-1455763916899-e8b50eca9967?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
-//   },
-//   {
-//     name: 'Granite Hill',
-//     image:
-//       'https://images.unsplash.com/photo-1475483768296-6163e08872a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
-//   },
-//   {
-//     name: "Mountain Goat's Rest",
-//     image:
-//       'https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
-//   },
-//   {
-//     name: 'Salmon Creek',
-//     image:
-//       'https://images.unsplash.com/photo-1455763916899-e8b50eca9967?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
-//   },
-//   {
-//     name: 'Granite Hill',
-//     image:
-//       'https://images.unsplash.com/photo-1475483768296-6163e08872a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
-//   },
-//   {
-//     name: "Mountain Goat's Rest",
-//     image:
-//       'https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
-//   },
-//   {
-//     name: 'Salmon Creek',
-//     image:
-//       'https://images.unsplash.com/photo-1455763916899-e8b50eca9967?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
-//   },
-//   {
-//     name: 'Granite Hill',
-//     image:
-//       'https://images.unsplash.com/photo-1475483768296-6163e08872a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
-//   },
-//   {
-//     name: "Mountain Goat's Rest",
-//     image:
-//       'https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
-//   }
-// ];
 //#endregion
 
 //#region Routes
@@ -99,7 +49,8 @@ app.post('/recipes', (req, res) => {
             name: data.title,
             desc: data.description,
             image: data.thumbnails.standard.url,
-            article: req.body.ytURL
+            article: req.body.ytURL,
+            ytId: id
           },
           (err, recipe) => {
             if (err) {
@@ -143,10 +94,13 @@ app.get('/recipes/:id', (req, res) => {
     }
   });
 });
+//#endregion Routes
 
 app.listen(5000, () => {
   console.log('Listening on port 5000');
 });
+
+//#region Global Functions
 
 async function getYtInfo(ytId) {
   const key = process.env.API_KEY;
@@ -170,4 +124,4 @@ function findID(ytURL) {
     console.log('There was an error!');
   }
 }
-//#endregion Routes
+//#endregion Global Functions
