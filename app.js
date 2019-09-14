@@ -26,7 +26,7 @@ const Recipe = mongoose.model('Recipe', recipeSchema);
 //#region Routes
 
 app.get('/', (req, res) => {
-  res.render('landing');
+  res.redirect('recipes');
 });
 
 app.get('/recipes', (req, res) => {
