@@ -1,7 +1,11 @@
-body {
-  font-family: 'Nunito', sans-serif;
+:root {
+  --shadow: 2px 3px 6px rgba(0, 0, 0, 0.25);
 }
 
+body {
+  background-color: #f7f7f7;
+  font-family: 'Nunito', sans-serif;
+}
 .navbar a {
   color: white;
 }
@@ -11,26 +15,13 @@ body {
 .navbar + .container {
   padding-top: 66px;
 }
-.full-page {
-  background-image: url(https://i.imgur.com/ZOQB0RX.jpg);
-  background-size: cover;
-  text-align: center;
-  height: 100vh;
-}
-.full-page > h1 {
-  font-size: 5em;
-  padding-top: 45vh;
-}
-.full-page > p {
-  font-size: 1.2rem;
-}
 header {
   margin-bottom: 32px;
 }
 header .jumbotron,
 .full-page {
   color: white;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.45);
+  text-shadow: var(--shadow);
 }
 header .jumbotron h1 {
   font-weight: bold;
@@ -41,22 +32,25 @@ header .jumbotron p {
 }
 
 .bg-img {
-  background-image: url(https://i.imgur.com/ZOQB0RX.jpg);
+  background-image: url(https://i.imgur.com/8r9FoHZ.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: right;
+  box-shadow: var(--shadow);
 }
 .card {
   border: none;
   border-radius: 25px;
-  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow);
   transition: transform 200ms;
 }
 .card:hover {
   transform: scale(1.02);
 }
+.card-img-top {
+  border-radius: 25px 25px 0 0;
+}
 .card-img-top:hover {
-  cursor: pointer;
   opacity: 0.9;
 }
 .btn {
