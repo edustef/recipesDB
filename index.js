@@ -1,7 +1,10 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
-  fetch = require('node-fetch');
+  yt = require('./public/js/yt'),
+  Recipe = require('./models/recipe'),
+  User = require('./models/user'),
+  Comment = require('./models/comment');
 require('dotenv').config();
 const app = express();
 
@@ -10,18 +13,6 @@ mongoose.connect('mongodb://localhost/recipesdb', { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
-
-//#region Schema Setup
-const recipeSchema = new mongoose.Schema({
-  name: String,
-  desc: String,
-  image: String,
-  article: String,
-  ytId: String
-});
-
-const Recipe = mongoose.model('Recipe', recipeSchema);
-//#endregion
 
 //#region Routes
 
@@ -41,8 +32,19 @@ app.get('/recipes', (req, res) => {
 
 app.post('/recipes', (req, res) => {
   if (req.body.ytURL) {
-    let id = findID(req.body.ytURL);
-    getYtInfo(id)
+    let id = yt.findId(req.body.ytURL);
+    yt.getComments(id)
+      .then(data => {
+        comment = {
+          text: data.items[0].snippet.snippet.textDisplay,
+          likes: data.items[0].snippet.snippet.likes,
+          authorDisplayName: data.items[0].snippet.snippet.authorDisplayName,
+          authorProfileImageUrl:
+            data.items[0].snippet.snippet.authorProfileImageUrl
+        };
+      })
+      .catch(err => console.log(err));
+    yt.getVideoData(id)
       .then(data => {
         Recipe.create(
           {
@@ -99,29 +101,3 @@ app.get('/recipes/:id', (req, res) => {
 app.listen(5000, () => {
   console.log('Listening on port 5000');
 });
-
-//#region Global Functions
-
-async function getYtInfo(ytId) {
-  const key = process.env.API_KEY;
-  const url =
-    'https://www.googleapis.com/youtube/v3/videos?id=' +
-    ytId +
-    '&key=' +
-    key +
-    '&part=snippet';
-  const response = await fetch(url);
-  const commits = await response.json();
-  return await commits.items[0].snippet;
-}
-
-function findID(ytURL) {
-  const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = ytURL.match(regExp);
-  if (match && match[2].length == 11) {
-    return match[2];
-  } else {
-    console.log('There was an error!');
-  }
-}
-//#endregion Global Functions
