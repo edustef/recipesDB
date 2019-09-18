@@ -35,7 +35,7 @@ app.post('/recipes', (req, res) => {
     let id = yt.findId(req.body.ytURL);
     yt.getComments(id)
       .then(data => {
-        comment = {
+        Comment.create = {
           text: data.items[0].snippet.snippet.textDisplay,
           likes: data.items[0].snippet.snippet.likes,
           authorDisplayName: data.items[0].snippet.snippet.authorDisplayName,
