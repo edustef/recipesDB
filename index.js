@@ -1,10 +1,9 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
-  yt = require('./public/js/yt'),
   Recipe = require('./models/recipe'),
   User = require('./models/user'),
-  Comment = require('./models/comment');
+  seeds = require('./public/js/seeds');
 require('dotenv').config();
 const app = express();
 
@@ -31,56 +30,8 @@ app.get('/recipes', (req, res) => {
 });
 
 app.post('/recipes', (req, res) => {
-  if (req.body.ytURL) {
-    let id = yt.findId(req.body.ytURL);
-    yt.getComments(id)
-      .then(data => {
-        Comment.create = {
-          text: data.items[0].snippet.snippet.textDisplay,
-          likes: data.items[0].snippet.snippet.likes,
-          authorDisplayName: data.items[0].snippet.snippet.authorDisplayName,
-          authorProfileImageUrl:
-            data.items[0].snippet.snippet.authorProfileImageUrl
-        };
-      })
-      .catch(err => console.log(err));
-    yt.getVideoData(id)
-      .then(data => {
-        Recipe.create(
-          {
-            name: data.title,
-            desc: data.description,
-            image: data.thumbnails.standard.url,
-            article: req.body.ytURL,
-            ytId: id
-          },
-          (err, recipe) => {
-            if (err) {
-              console.error(err);
-            } else {
-              res.redirect('/recipes');
-            }
-          }
-        );
-      })
-      .catch(err => console.log(err));
-  } else {
-    Recipe.create(
-      {
-        name: req.body.name,
-        desc: req.body.desc,
-        image: req.body.image,
-        article: req.body.article
-      },
-      (err, recipe) => {
-        if (err) {
-          console.log('Failed to create a card!');
-        } else {
-          res.redirect('/recipes');
-        }
-      }
-    );
-  }
+  seeds(req.body);
+  res.redirect('/recipes');
 });
 
 app.get('/recipes/new', (req, res) => {
