@@ -5,7 +5,13 @@ const recipeSchema = new mongoose.Schema({
   desc: String,
   image: String,
   article: String,
-  ytId: String
+  ytId: String,
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ]
 });
 
 module.exports = mongoose.model('Recipe', recipeSchema);
