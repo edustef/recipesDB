@@ -6,6 +6,12 @@ body {
   background-color: #f7f7f7;
   font-family: 'Nunito', sans-serif;
 }
+.navbar .img-responsive {
+  height: auto;
+  width: auto;
+  max-width: 35px;
+  filter: invert(100%);
+}
 .navbar a {
   color: white;
 }
@@ -13,7 +19,7 @@ body {
   color: gray;
 }
 .navbar + .container {
-  padding-top: 66px;
+  padding-top: 84px;
 }
 header {
   margin-bottom: 32px;
@@ -66,4 +72,7 @@ header .jumbotron p {
 }
 .video {
   border-radius: 10px;
+}
+.embed-responsive {
+  margin-bottom: 32px;
 }
