@@ -3,30 +3,30 @@ const mongoose = require('mongoose'),
   Recipe = require('../../models/recipe'),
   Comment = require('../../models/comment');
 
-async function seeds(body) {
+const seeds = async body => {
   if (body.ytURL) {
     let id = yt.findId(body.ytURL);
     videoData = await yt.getVideoData(id);
-    comments = await yt.getComments(id);
+    comments = (await yt.getComments(id)).items;
 
     recipe = await Recipe.create({
       name: videoData.title,
       desc: videoData.description,
-      image: videoData.thumbnails.standard.url,
+      image: videoData.thumbnails.medium.url,
       article: body.ytURL,
       ytId: id
     });
-    comments.forEach(comment => {
+    for (let i = 0; i < comments.length; i++) {
       comment = await Comment.create({
         authorDisplayName:
-          comments.items[0].snippet.topLevelComment.snippet.authorDisplayName,
+          comments[i].snippet.topLevelComment.snippet.authorDisplayName,
         authorProfileImageUrl:
-          comments.items[0].snippet.topLevelComment.snippet.authorProfileImageUrl,
-        text: comments.items[0].snippet.topLevelComment.snippet.textDisplay,
-        likes: comments.items[0].snippet.topLevelComment.snippet.likes
+          comments[i].snippet.topLevelComment.snippet.authorProfileImageUrl,
+        text: comments[i].snippet.topLevelComment.snippet.textDisplay
       });
       recipe.comments.push(comment);
-    });
+    }
+    recipe.save();
   } else {
     Recipe.create(body.recipe, (err, recipe) => {
       if (err) {
@@ -34,6 +34,6 @@ async function seeds(body) {
       }
     });
   }
-}
+};
 
 module.exports = seeds;
