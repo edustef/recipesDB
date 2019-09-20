@@ -1,5 +1,6 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
+  methodOverride = require('method-override'),
   mongoose = require('mongoose'),
   Recipe = require('./models/recipe'),
   User = require('./models/user'),
@@ -12,7 +13,7 @@ mongoose.connect('mongodb://localhost/recipesdb', { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
-
+app.use(methodOverride('_method'));
 //#region Routes
 
 app.get('/', (req, res) => {
@@ -29,8 +30,8 @@ app.get('/recipes', (req, res) => {
   });
 });
 
-app.post('/recipes', (req, res) => {
-  seeds(req.body);
+app.post('/recipes', async (req, res) => {
+  await seeds(req.body);
   res.redirect('/recipes');
 });
 
@@ -39,11 +40,21 @@ app.get('/recipes/new', (req, res) => {
 });
 
 app.get('/recipes/:id', (req, res) => {
-  Recipe.findById(req.params.id, (err, foundRecipe) => {
+  Recipe.findById(req.params.id).populate('comments').exec((err, foundRecipe) => {
     if (err) {
       console.log('Failed to fetch id!');
     } else {
       res.render('show', { recipe: foundRecipe });
+    }
+  });
+});
+
+app.delete('/recipes/:id', (req, res) => {
+  Recipe.findByIdAndRemove(req.params.id, err => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/recipes');
     }
   });
 });
