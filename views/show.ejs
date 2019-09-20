@@ -1,14 +1,30 @@
 <% include  partials/header.ejs %>
 
-    <h1><%= recipe.name %></h1>
-    <h2><%= recipe.article %></h2>
-    <hr>
-    <p><%= recipe.desc %></p>
-    <hr>
-    <% if (recipe.ytId) { %>
-        <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item video" src="https://www.youtube.com/embed/<%= recipe.ytId %>" allowfullscreen></iframe>
-        </div>
-    <% } %>
-    
-<% include  partials/footer.ejs %>
+<h1><%= recipe.name %></h1>
+<h2><%= recipe.article %></h2>
+<hr>
+<p><%= recipe.desc %></p>
+<hr>
+<% if (recipe.ytId) { %>
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item video" src="https://www.youtube.com/embed/<%= recipe.ytId %>"
+    allowfullscreen></iframe>
+</div>
+<h2>Comments</h1>
+  <hr>
+  <% recipe.comments.forEach(comment => { %>
+  <div class="card">
+    <div class="card-body">
+      <img src="<%= comment.authorProfileImageUrl%>" style="display: inline">
+      <h4 class="card-title"><%= comment.authorDisplayName%></h4>
+      <p><%= comment.text %></p>
+    </div>
+  </div>
+  <% }) %>
+  <% } %>
+  <hr>
+  <form class="inline-form" action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
+    <button class="btn btn-danger">DELETE RECIPE</button>
+  </form>
+
+  <% include  partials/footer.ejs %>
