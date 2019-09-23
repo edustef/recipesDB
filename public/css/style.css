@@ -6,6 +6,7 @@ body {
   background-color: #f7f7f7;
   font-family: 'Nunito', sans-serif;
 }
+
 .navbar .img-responsive {
   height: auto;
   width: auto;
@@ -21,6 +22,7 @@ body {
 .navbar + .container {
   padding-top: 84px;
 }
+
 header {
   margin-bottom: 32px;
 }
@@ -36,14 +38,14 @@ header .jumbotron p {
   font-weight: lighter;
   font-size: 1.18rem;
 }
-
-.bg-img {
+header .bg-img {
   background-image: url(https://i.imgur.com/8r9FoHZ.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: right;
   box-shadow: var(--shadow);
 }
+
 .card {
   border: none;
   border-radius: 25px;
@@ -70,6 +72,7 @@ header .jumbotron p {
   color: lightblue !important;
   cursor: pointer;
 }
+
 .video {
   border-radius: 10px;
 }
