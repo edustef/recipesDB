@@ -6,7 +6,7 @@ body {
   background-color: #f7f7f7;
   font-family: 'Nunito', sans-serif;
 }
-
+/* #region HEADER STYLE */
 .navbar .img-responsive {
   height: auto;
   width: auto;
@@ -45,13 +45,16 @@ header .bg-img {
   background-position: right;
   box-shadow: var(--shadow);
 }
+/* #endregion */
 
+/* #region CARD STYLE */
 .card {
   border: none;
   border-radius: 25px;
   box-shadow: var(--shadow);
   transition: transform 200ms;
 }
+
 .card:hover {
   transform: scale(1.02);
 }
@@ -61,6 +64,8 @@ header .bg-img {
 .card-img-top:hover {
   opacity: 0.9;
 }
+/* #endregion */
+
 .btn {
   border-radius: 100px 100px 100px 100px;
 }
@@ -78,4 +83,13 @@ header .bg-img {
 }
 .embed-responsive {
   margin-bottom: 32px;
+}
+
+.comment-header {
+  display: flex;
+  flex-direction: rows;
+  align-items: center;
+}
+.comment-header > * {
+  margin-right: 10px !important;
 }

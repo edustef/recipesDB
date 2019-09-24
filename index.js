@@ -3,6 +3,7 @@ const express = require('express'),
   methodOverride = require('method-override'),
   mongoose = require('mongoose'),
   Recipe = require('./models/recipe'),
+  Comment = require('./models/comment'),
   User = require('./models/user'),
   seeds = require('./public/js/seeds');
 require('dotenv').config();
@@ -40,26 +41,54 @@ app.get('/recipes/new', (req, res) => {
 });
 
 app.get('/recipes/:id', (req, res) => {
-  Recipe.findById(req.params.id).populate('comments').exec((err, foundRecipe) => {
+  Recipe.findById(req.params.id)
+    .populate('comments')
+    .exec((err, recipe) => {
+      if (err) {
+        console.log('Failed to fetch id!');
+      } else {
+        res.render('show', { recipe: recipe });
+      }
+    });
+});
+
+app.post('/recipes/:id', (req, res) => {
+  Recipe.findById(req.params.id, (err, recipe) => {
     if (err) {
-      console.log('Failed to fetch id!');
+      console.log(err);
     } else {
-      res.render('show', { recipe: foundRecipe });
+      Comment.create(req.body.comment, (err, comment) => {
+        if (err) {
+          console.log(err);
+        } else {
+          recipe.comments.push(comment);
+          recipe.save();
+          res.redirect('/recipes/' + req.params.id + '#comment-section');
+        }
+      });
     }
   });
 });
 
 app.delete('/recipes/:id', (req, res) => {
-  Recipe.findByIdAndRemove(req.params.id, err => {
+  Recipe.findByIdAndRemove(req.params.id, (err, recipe) => {
     if (err) {
       console.log(err);
     } else {
-      res.redirect('/recipes');
+      for (let i = 0; i < recipe.comments.length; i++) {
+        Comment.findByIdAndRemove(recipe.comments[i]._id, err => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
     }
+    res.redirect('/recipes');
   });
 });
 //#endregion Routes
-
+//3e1
+//
 app.listen(5000, () => {
   console.log('Listening on port 5000');
 });

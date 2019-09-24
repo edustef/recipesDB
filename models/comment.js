@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema({
-  authorDisplayName: String,
+  authorDisplayName: { type: String, default: 'Anon' },
   authorProfileImageUrl: String,
-  text: String
+  text: String,
+  isYoutube: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Comment', commentSchema);

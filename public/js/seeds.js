@@ -14,7 +14,7 @@ const seeds = async body => {
       desc: videoData.description,
       image: videoData.thumbnails.medium.url,
       article: body.ytURL,
-      ytId: id
+      ytId: id,
     });
     for (let i = 0; i < comments.length; i++) {
       comment = await Comment.create({
@@ -22,7 +22,8 @@ const seeds = async body => {
           comments[i].snippet.topLevelComment.snippet.authorDisplayName,
         authorProfileImageUrl:
           comments[i].snippet.topLevelComment.snippet.authorProfileImageUrl,
-        text: comments[i].snippet.topLevelComment.snippet.textDisplay
+        text: comments[i].snippet.topLevelComment.snippet.textDisplay,
+        isYoutube: true
       });
       recipe.comments.push(comment);
     }
@@ -31,6 +32,8 @@ const seeds = async body => {
     Recipe.create(body.recipe, (err, recipe) => {
       if (err) {
         console.log('Failed to create a card!');
+      } else {
+        Recipe.create(recipe);
       }
     });
   }
