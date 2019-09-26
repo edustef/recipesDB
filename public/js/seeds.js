@@ -14,7 +14,7 @@ const seeds = async body => {
       desc: videoData.description,
       image: videoData.thumbnails.medium.url,
       article: body.ytURL,
-      ytId: id,
+      ytId: id
     });
     for (let i = 0; i < comments.length; i++) {
       comment = await Comment.create({
@@ -29,13 +29,11 @@ const seeds = async body => {
     }
     recipe.save();
   } else {
-    Recipe.create(body.recipe, (err, recipe) => {
-      if (err) {
-        console.log('Failed to create a card!');
-      } else {
-        Recipe.create(recipe);
-      }
-    });
+    if (body.recipe.image == '') {
+      body.recipe.image = undefined;
+    }
+    
+    Recipe.create(body.recipe);
   }
 };
 
