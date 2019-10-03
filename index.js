@@ -119,6 +119,16 @@ app.post('/register', (req, res) => {
   });
 });
 
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/recipes',
+  failureRedirect: '/login'
+}), (req, res) => {
+  res.send('logged in');
+});
+
 //#endregion Routes
 
 app.listen(5000, () => {
