@@ -67,7 +67,7 @@ app.get('/recipes/:id', (req, res) => {
     });
 });
 
-app.post('/recipes/:id', (req, res) => {
+app.post('/recipes/:id', isLoggedIn, (req, res) => {
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) {
       console.log(err);
@@ -129,7 +129,19 @@ app.post('/login', passport.authenticate('local', {
   res.send('logged in');
 });
 
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/recipes');
+});
+
 //#endregion Routes
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
 
 app.listen(5000, () => {
   console.log('Listening on port 5000');
