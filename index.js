@@ -1,4 +1,6 @@
 const express = require('express'),
+  passport = require('passport'),
+  LocalStrategy = require('passport-local'),
   bodyParser = require('body-parser'),
   methodOverride = require('method-override'),
   mongoose = require('mongoose'),
@@ -15,6 +17,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
+
+//PASSPORT CONFIGURATION
+app.use(require('express-session')({
+  secret: 'This is a recipe site you know',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //#region Routes
 
 app.get('/', (req, res) => {
@@ -86,9 +101,26 @@ app.delete('/recipes/:id', (req, res) => {
     res.redirect('/recipes');
   });
 });
+
+//AUTH ROUTES
+
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+app.post('/register', (req, res) => {
+  User.register(new User({ username: req.body.username }), req.body.password, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.render('register');
+    }
+    passport.authenticate('local')(req, res, () => {
+      res.redirect('/recipes');
+    });
+  });
+});
+
 //#endregion Routes
-//3e1
-//
+
 app.listen(5000, () => {
   console.log('Listening on port 5000');
 });
