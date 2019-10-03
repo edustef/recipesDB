@@ -30,6 +30,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 //#region Routes
 
 app.get('/', (req, res) => {
@@ -46,12 +51,12 @@ app.get('/recipes', (req, res) => {
   });
 });
 
-app.post('/recipes', async (req, res) => {
+app.post('/recipes', isLoggedIn, async (req, res) => {
   await seeds(req.body);
   res.redirect('/recipes');
 });
 
-app.get('/recipes/new', (req, res) => {
+app.get('/recipes/new', isLoggedIn, (req, res) => {
   res.render('new');
 });
 
