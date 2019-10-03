@@ -80,11 +80,11 @@ header .bg-img {
 
 .video {
   border-radius: 10px;
-  max-width: 800px;
-  max-height: 450px;
 }
 .embed-responsive {
-  margin-bottom: 32px;
+  margin:0 auto 32px auto;
+  max-width: 800px;
+  max-height: 450px;
 }
 
 .comment-header {
