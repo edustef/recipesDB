@@ -1,7 +1,7 @@
-<% include  partials/header.ejs %>
+<% include  ../partials/header.ejs %>
 
 <h1><%= recipe.name %></h1>
-<small><a class="btn btn-info" href="recipe.article">See original article</a></small>
+<small><a class="btn btn-info" href="<%= recipe.article %>" target="_blank">See original article</a></small>
 <hr>
 <p><%= recipe.desc %></p>
 <hr>
@@ -45,4 +45,4 @@
   <button class="btn btn-danger">DELETE RECIPE</button>
 </form>
 
-<% include  partials/footer.ejs %>
+<% include  ../partials/footer.ejs %>

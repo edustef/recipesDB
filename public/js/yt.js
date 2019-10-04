@@ -10,7 +10,6 @@ module.exports.getVideoData = async function(ytId) {
     '&part=snippet';
   const response = await fetch(url);
   const commits = await response.json();
-  console.log(commits);
   return await commits.items[0].snippet;
 };
 
