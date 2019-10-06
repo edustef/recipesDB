@@ -18,9 +18,11 @@ const seeds = async body => {
     });
     for (let i = 0; i < comments.length; i++) {
       comment = await Comment.create({
-        authorDisplayName:
-          comments[i].snippet.topLevelComment.snippet.authorDisplayName,
-        authorProfileImageUrl:
+        user: {
+          username:
+            comments[i].snippet.topLevelComment.snippet.authorDisplayName
+        },
+        profilePic:
           comments[i].snippet.topLevelComment.snippet.authorProfileImageUrl,
         text: comments[i].snippet.topLevelComment.snippet.textDisplay,
         isYoutube: true
@@ -32,7 +34,7 @@ const seeds = async body => {
     if (body.recipe.image == '') {
       body.recipe.image = undefined;
     }
-    
+
     Recipe.create(body.recipe);
   }
 };

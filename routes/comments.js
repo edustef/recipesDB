@@ -26,7 +26,7 @@ router.post('/recipes/:id', isLoggedIn, (req, res) => {
   });
 });
 
-router.delete('/recipes/:id', (req, res) => {
+router.delete('/recipes/:id', isLoggedIn, (req, res) => {
   //Delete post and  it's comments from db
   Recipe.findByIdAndRemove(req.params.id, (err, recipe) => {
     if (err) {

@@ -15,23 +15,30 @@
 <% } %>
 <h2 id="comment-section">Comments</h2>
 <hr>
+
 <!-- POST COMMENT -->
 <form action="/recipes/<%= recipe._id %>" method="POST">
   <div class="form-group">
-    <label for="">Post comment!</label>
+    <% if(currentUser) { %>
+    <div class="profile">
+      <img width=50 src="<%= currentUser.profilePic %>" alt="">
+      <h5 style="display: inline; margin:0"><%= currentUser.username %></h5>
+    </div>
+    <% } else { %>
+    <div><strong>Login to post comment!</strong></div>
+    <% } %>
     <textarea class="form-control" required id="comment" name="comment[text]" rows="3"
       placeholder="Type your comment here..."></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Post comment</button>
 </form>
 <hr>
+
 <% for(let i = recipe.comments.length - 1; i >= 0; i--) { %>
 <div class="container">
   <div class="comment-header">
-    <% if (recipe.comments[i].authorProfileImageUrl) { %>
-    <img class="rounded-circle" style="width:50px; height:50px;" src="<%= recipe.comments[i].authorProfileImageUrl %>">
-    <% } %>
-    <h4 style="display: inline; margin:0" class="card-title"><%= recipe.comments[i].authorDisplayName %></h4>
+    <img class="rounded-circle" style="width:50px; height:50px;" src="<%= recipe.comments[i].profilePic %>">
+    <h5 style="display: inline; margin:0" class="card-title"><%= recipe.comments[i].user.username %></h5>
     <% if (recipe.comments[i].isYoutube) { %>
     <i class="fab fa-youtube"></i>
     <% } %>
