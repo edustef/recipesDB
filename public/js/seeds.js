@@ -13,7 +13,8 @@ const seeds = async body => {
       desc: videoData.description,
       image: videoData.thumbnails.medium.url,
       article: body.ytURL,
-      ytId: id
+      ytId: id,
+      user: body.user
     });
     for (let i = 0; i < comments.length; i++) {
       comment = await Comment.create({
