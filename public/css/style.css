@@ -20,7 +20,7 @@ body {
   color: gray;
 }
 .navbar + .container {
-  padding-top: 84px;
+  padding-top: 32px;
 }
 
 header {
