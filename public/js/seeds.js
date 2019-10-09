@@ -19,11 +19,12 @@ const seeds = async body => {
     for (let i = 0; i < comments.length; i++) {
       comment = await Comment.create({
         user: {
+          id: undefined,
           username:
-            comments[i].snippet.topLevelComment.snippet.authorDisplayName
+            comments[i].snippet.topLevelComment.snippet.authorDisplayName,
+          profilePic:
+            comments[i].snippet.topLevelComment.snippet.authorProfileImageUrl
         },
-        profilePic:
-          comments[i].snippet.topLevelComment.snippet.authorProfileImageUrl,
         text: comments[i].snippet.topLevelComment.snippet.textDisplay,
         isYoutube: true
       });

@@ -17,6 +17,10 @@ router.post('/recipes/:id', isLoggedIn, (req, res) => {
         if (err) {
           console.log(err);
         } else {
+          comment.user.username = req.user.username;
+          comment.user.id = req.user._id;
+          comment.user.profilePic = req.user.profilePic;
+          comment.save();
           recipe.comments.push(comment);
           recipe.save();
           res.redirect('/recipes/' + req.params.id + '#comment-section');

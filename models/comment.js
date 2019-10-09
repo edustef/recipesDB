@@ -6,9 +6,9 @@ const commentSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    username: String
+    username: String,
+    profilePic: String
   },
-  profilePic: String,
   text: String,
   isYoutube: { type: Boolean, default: false }
 });

@@ -22,7 +22,6 @@
     <% if(currentUser) { %>
     <div class="post-com-header">
       <img width=50 src="<%= currentUser.profilePic %>" alt="">
-      <input style="display:none  " type="image" src="<%= currentUser.profilePic %>">
       <h5 style="display: inline; margin:0"><%= currentUser.username %></h5>
     </div>
     <% } else { %>
@@ -38,7 +37,7 @@
 <% for(let i = recipe.comments.length - 1; i >= 0; i--) { %>
 <div class="container">
   <div class="comment-header">
-    <img class="rounded-circle" width=50 src="<%= recipe.comments[i].profilePic %>">
+    <img class="rounded-circle" width=50 src="<%= recipe.comments[i].user.profilePic %>">
     <h5 style="display: inline; margin:0" class="card-title"><%= recipe.comments[i].user.username %></h5>
     <% if (recipe.comments[i].isYoutube) { %>
     <i class="fab fa-youtube"></i>
