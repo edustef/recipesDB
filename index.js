@@ -4,10 +4,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   methodOverride = require('method-override'),
   mongoose = require('mongoose'),
-  Recipe = require('./models/recipe'),
-  Comment = require('./models/comment'),
-  User = require('./models/user'),
-  seeds = require('./public/js/seeds');
+  User = require('./models/user');
 
 const commentRoutes = require('./routes/comments'),
   recipeRoutes = require('./routes/recipes'),
