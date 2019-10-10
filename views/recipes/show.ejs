@@ -1,6 +1,7 @@
 <% include  ../partials/header.ejs %>
 
-<h1><%= recipe.name %></h1>
+<h1 style="margin-bottom:0"><%= recipe.name %></h1>
+<small class="small-text">Posted by <%= recipe.user.username %>.</small>
 <small><a class="btn btn-info" href="<%= recipe.article %>" target="_blank">See original article</a></small>
 <hr>
 <p><%= recipe.desc %></p>

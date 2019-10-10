@@ -110,3 +110,10 @@ header .bg-img {
 .post-com-header {
   margin-bottom: 20px;
 }
+
+.small-text {
+  display:block; 
+  margin-bottom:12px; 
+  color:gray;
+  letter-spacing: 0.15rem;
+}

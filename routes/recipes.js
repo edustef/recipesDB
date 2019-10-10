@@ -22,7 +22,16 @@ router.get('/recipes', (req, res) => {
 });
 
 router.post('/recipes', isLoggedIn, async (req, res) => {
-  await seeds(req.body);
+  user = {
+    id: req.user._id,
+    username: req.user.username
+  }
+
+  body = req.body.recipe;
+  body.user = user;
+  console.log(body);
+
+  await seeds(body);
   res.redirect('/recipes');
 });
 
