@@ -7,7 +7,6 @@ const express = require('express'),
 //RECIPES ROUTES
 //================
 
-
 router.get('/', (req, res) => {
   res.redirect('recipes');
 });
@@ -26,7 +25,7 @@ router.post('/recipes', isLoggedIn, async (req, res) => {
   user = {
     id: req.user._id,
     username: req.user.username
-  }
+  };
 
   body = req.body.recipe;
   body.user = user;
@@ -52,19 +51,19 @@ router.get('/recipes/:id', (req, res) => {
     });
 });
 
-router.get('/recipes/:id/edit', (req, res) => {
-  Recipe.findById(req.params.id, (err, recipe) => {
-    if (err) {
-      res.redirect('/recipes');
-    } else {
-      res.render("recipes/edit", { recipe: recipe });
-    }
-  });
+router.get('/recipes/:id/edit',checkAuthorization, (req, res) => {
+    Recipe.findById(req.params.id, (err, recipe) => {
+      if (err) {
+        res.redirect('/recipes');
+      } else {
+          res.render('recipes/edit', { recipe: recipe })
+      }
+    });
 });
 
-router.put('/recipes/:id', (req, res) => {
+router.put('/recipes/:id',checkAuthorization, (req, res) => {
   Recipe.findByIdAndUpdate(req.params.id, req.body.recipe, (err, recipe) => {
-    if(err) {
+    if (err) {
       res.redirect('/recipes');
     } else {
       res.redirect('/recipes/' + req.params.id);
@@ -72,14 +71,7 @@ router.put('/recipes/:id', (req, res) => {
   });
 });
 
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
-
-router.delete('/recipes/:id', isLoggedIn, (req, res) => {
+router.delete('/recipes/:id',checkAuthorization, (req, res) => {
   //Delete post and  it's comments from db
   Recipe.findByIdAndRemove(req.params.id, (err, recipe) => {
     if (err) {
@@ -96,5 +88,30 @@ router.delete('/recipes/:id', isLoggedIn, (req, res) => {
     res.redirect('/recipes');
   });
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+function checkAuthorization(req, res, next) {
+  if (req.isAuthenticated()) {
+    Recipe.findById(req.params.id, (err, recipe) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        if (recipe.user.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
+}
 
 module.exports = router;
