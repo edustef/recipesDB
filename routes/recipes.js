@@ -7,6 +7,7 @@ const express = require('express'),
 //RECIPES ROUTES
 //================
 
+
 router.get('/', (req, res) => {
   res.redirect('recipes');
 });
@@ -51,11 +52,49 @@ router.get('/recipes/:id', (req, res) => {
     });
 });
 
+router.get('/recipes/:id/edit', (req, res) => {
+  Recipe.findById(req.params.id, (err, recipe) => {
+    if (err) {
+      res.redirect('/recipes');
+    } else {
+      res.render("recipes/edit", { recipe: recipe });
+    }
+  });
+});
+
+router.put('/recipes/:id', (req, res) => {
+  Recipe.findByIdAndUpdate(req.params.id, req.body.recipe, (err, recipe) => {
+    if(err) {
+      res.redirect('/recipes');
+    } else {
+      res.redirect('/recipes/' + req.params.id);
+    }
+  });
+});
+
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
   res.redirect('/login');
 }
+
+router.delete('/recipes/:id', isLoggedIn, (req, res) => {
+  //Delete post and  it's comments from db
+  Recipe.findByIdAndRemove(req.params.id, (err, recipe) => {
+    if (err) {
+      console.log(err);
+    } else {
+      for (let i = 0; i < recipe.comments.length; i++) {
+        Comment.findByIdAndRemove(recipe.comments[i]._id, err => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+    }
+    res.redirect('/recipes');
+  });
+});
 
 module.exports = router;
