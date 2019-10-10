@@ -48,6 +48,13 @@ header .bg-img {
 /* #endregion */
 
 /* #region CARD STYLE */
+
+hr {
+  border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
+}
+
 .card {
   border: none;
   border-radius: 25px;
@@ -116,4 +123,14 @@ header .bg-img {
   margin-bottom:12px; 
   color:gray;
   letter-spacing: 0.15rem;
+}
+
+.recipe-title {
+  margin-bottom: 0;
+}
+.recipe-title > h1 {
+  display:inline;
+}
+.recipe-title > a {
+  font-size: 1.5em;
 }
