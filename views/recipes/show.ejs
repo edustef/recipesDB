@@ -1,10 +1,12 @@
 <% include  ../partials/header.ejs %>
 <div class="recipe-title">
   <h1><%= recipe.name %></h1>
+  <% if(currentUser && recipe.user.id.equals(currentUser._id)) { %>
   <a class="btn btn-primary" href="/recipes/<%= recipe._id %>/edit"><i class="fas fa-pencil-alt"></i></a>
   <form class="inline-frm" action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
     <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
   </form>
+  <% } %>
 </div>
 <small class="small-text">Posted by <%= recipe.user.username %>.</small>
 <small><a class="btn btn-info" href="<%= recipe.article %>" target="_blank">See original article</a></small>
