@@ -1,6 +1,7 @@
 const express = require('express'),
   router = express.Router(),
   Recipe = require('../models/recipe'),
+  Comment = require('../models/recipe'),
   seeds = require('../public/js/seeds');
 
 //================
