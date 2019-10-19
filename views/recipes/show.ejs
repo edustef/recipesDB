@@ -2,9 +2,12 @@
 <div class="recipe-title">
   <h1><%= recipe.name %></h1>
   <% if(currentUser && recipe.user.id.equals(currentUser._id)) { %>
-  <a class="btn btn-primary" href="/recipes/<%= recipe._id %>/edit"><i class="fas fa-pencil-alt"></i></a>
+  <div>
+    <a class="btn btn-primary svg-icon-holder" href="/recipes/<%= recipe._id %>/edit"><img class="svg-icon"
+        src="/assets/pencil-alt-solid.svg"></a>
+  </div>
   <form class="inline-frm" action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
-    <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+    <button class="btn btn-danger svg-icon-holder"><img class="svg-icon" src="/assets/trash-solid.svg"></button>
   </form>
   <% } %>
 </div>
@@ -48,7 +51,9 @@
     <img class="rounded-circle" width=50 src="<%= recipe.comments[i].user.profilePic %>">
     <h5 style="display: inline; margin:0" class="card-title"><%= recipe.comments[i].user.username %></h5>
     <% if (recipe.comments[i].isYoutube) { %>
-    <i class="fab fa-youtube"></i>
+    <div class="svg-icon-holder">
+      <img class="svg-icon" src="/assets/youtube-brands.svg">
+    </div>
     <% } %>
   </div>
   <p><%= recipe.comments[i].text %></p>

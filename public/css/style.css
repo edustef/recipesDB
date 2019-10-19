@@ -140,15 +140,24 @@ hr {
   margin-bottom: 0;
 }
 
-.recipe-title > a {
-  width: 40px;
-  height: 38px;
-}
-
 .recipe-title > * {
   margin-right: 10px;
 }
 
-.recipe-title > .inline-frm {
+.inline-frm {
   display: inline-block;
+}
+
+.svg-icon-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 45px !important;
+  height: 45px !important;
+}
+.svg-icon {
+  width: 20px !important;
+  height: 20px !important;
 }

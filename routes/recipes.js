@@ -30,7 +30,6 @@ router.post('/recipes', isLoggedIn, async (req, res) => {
 
   body = req.body.recipe;
   body.user = user;
-  console.log(body);
 
   await seeds(body);
   res.redirect('/recipes');
