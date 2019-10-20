@@ -39,8 +39,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(recipeRoutes);
-app.use(commentRoutes);
+app.get('/', (req, res) => {
+  res.redirect('recipes');
+});
+
+app.use('/recipes', recipeRoutes);
+app.use('/recipes/:id', commentRoutes);
 app.use(authRoutes);
 
 app.listen(5000, () => {

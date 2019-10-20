@@ -1,5 +1,5 @@
 const express = require('express'),
-  router = express.Router(),
+  router = express.Router({mergeParams: true}),
   Recipe = require('../models/recipe'),
   Comment = require('../models/comment');
 
@@ -7,7 +7,7 @@ const express = require('express'),
 //COMMENTS ROUTES
 //================
 
-router.post('/recipes/:id', isLoggedIn, (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
   //POST Comment
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) {

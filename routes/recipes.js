@@ -9,10 +9,6 @@ const express = require('express'),
 //================
 
 router.get('/', (req, res) => {
-  res.redirect('recipes');
-});
-
-router.get('/recipes', (req, res) => {
   Recipe.find({}, (err, recipes) => {
     if (err) {
       console.error('No recipes found');
@@ -22,7 +18,7 @@ router.get('/recipes', (req, res) => {
   });
 });
 
-router.post('/recipes', isLoggedIn, async (req, res) => {
+router.post('/', isLoggedIn, async (req, res) => {
   user = {
     id: req.user._id,
     username: req.user.username
@@ -35,11 +31,11 @@ router.post('/recipes', isLoggedIn, async (req, res) => {
   res.redirect('/recipes');
 });
 
-router.get('/recipes/new', isLoggedIn, (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   res.render('recipes/new');
 });
 
-router.get('/recipes/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   Recipe.findById(req.params.id)
     .populate('comments')
     .exec((err, recipe) => {
@@ -51,17 +47,17 @@ router.get('/recipes/:id', (req, res) => {
     });
 });
 
-router.get('/recipes/:id/edit',checkAuthorization, (req, res) => {
-    Recipe.findById(req.params.id, (err, recipe) => {
-      if (err) {
-        res.redirect('/recipes');
-      } else {
-          res.render('recipes/edit', { recipe: recipe })
-      }
-    });
+router.get('/:id/edit', checkAuthorization, (req, res) => {
+  Recipe.findById(req.params.id, (err, recipe) => {
+    if (err) {
+      res.redirect('/recipes');
+    } else {
+      res.render('recipes/edit', { recipe: recipe });
+    }
+  });
 });
 
-router.put('/recipes/:id',checkAuthorization, (req, res) => {
+router.put('/:id', checkAuthorization, (req, res) => {
   Recipe.findByIdAndUpdate(req.params.id, req.body.recipe, (err, recipe) => {
     if (err) {
       res.redirect('/recipes');
@@ -71,7 +67,7 @@ router.put('/recipes/:id',checkAuthorization, (req, res) => {
   });
 });
 
-router.delete('/recipes/:id',checkAuthorization, (req, res) => {
+router.delete('/:id', checkAuthorization, (req, res) => {
   //Delete post and  it's comments from db
   Recipe.findByIdAndRemove(req.params.id, (err, recipe) => {
     if (err) {
