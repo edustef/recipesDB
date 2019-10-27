@@ -30,7 +30,7 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
-router.get('/comments/:comment_id/edit', (req, res) => {
+router.get('/comments/:comment_id/edit', checkCommentAuth, (req, res) => {
   Comment.findById(req.params.comment_id, (err, comment) => {
     if (err) {
       console.log(err);
@@ -57,7 +57,7 @@ router.put('/comments/:comment_id', (req, res) => {
   );
 });
 
-router.delete('/comments/:comment_id', (req, res) => {
+router.delete('/comments/:comment_id', checkCommentAuth, (req, res) => {
   Comment.findByIdAndRemove(req.params.comment_id, (err, comment) => {
     if (err) {
       console.log(err);
@@ -72,6 +72,24 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   res.redirect('/login');
+}
+
+function checkCommentAuth(req, res, next) {
+  if (req.isAuthenticated()) {
+    Comment.findById(req.params.comment_id, (err, comment) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        if (comment.user.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
 }
 
 module.exports = router;

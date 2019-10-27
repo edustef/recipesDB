@@ -55,7 +55,7 @@
     <div class="svg-icon-holder">
       <img class="svg-icon" src="/assets/youtube-brands.svg">
     </div>
-    <% } else { %>
+    <% } else if(currentUser && recipe.comments[i].user.id.equals(currentUser._id)) { %>
     <br>
     <div class="svg-icon-holder-comm">
       <a href="/recipes/<%= recipe._id %>/comments/<%= recipe.comments[i]._id %>/edit"><img class="svg-icon-comm"

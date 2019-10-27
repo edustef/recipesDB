@@ -47,7 +47,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.get('/:id/edit', checkAuthorization, (req, res) => {
+router.get('/:id/edit', checkAuth, (req, res) => {
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) {
       res.redirect('/recipes');
@@ -57,7 +57,7 @@ router.get('/:id/edit', checkAuthorization, (req, res) => {
   });
 });
 
-router.put('/:id', checkAuthorization, (req, res) => {
+router.put('/:id', checkAuth, (req, res) => {
   Recipe.findByIdAndUpdate(req.params.id, req.body.recipe, (err, recipe) => {
     if (err) {
       res.redirect('/recipes');
@@ -67,7 +67,7 @@ router.put('/:id', checkAuthorization, (req, res) => {
   });
 });
 
-router.delete('/:id', checkAuthorization, (req, res) => {
+router.delete('/:id', checkAuth, (req, res) => {
   //Delete post and  it's comments from db
   Recipe.findByIdAndRemove(req.params.id, (err, recipe) => {
     if (err) {
@@ -92,7 +92,7 @@ function isLoggedIn(req, res, next) {
   res.redirect('/login');
 }
 
-function checkAuthorization(req, res, next) {
+function checkAuth(req, res, next) {
   if (req.isAuthenticated()) {
     Recipe.findById(req.params.id, (err, recipe) => {
       if (err) {
