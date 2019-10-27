@@ -8,7 +8,7 @@ const express = require('express'),
 
 const commentRoutes = require('./routes/comments'),
   recipeRoutes = require('./routes/recipes'),
-  authRoutes = require('./routes/auth');
+  userRoutes = require('./routes/user');
 
 require('dotenv').config();
 const app = express();
@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 
 app.use('/recipes', recipeRoutes);
 app.use('/recipes/:id', commentRoutes);
-app.use(authRoutes);
+app.use(userRoutes);
 
 app.listen(5000, () => {
   console.log('Listening on port 5000');

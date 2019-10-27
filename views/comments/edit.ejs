@@ -1,0 +1,14 @@
+<% include  ../partials/header %>
+
+<h1>Edit</h1>
+
+<form action="/recipes/<%= recipe_id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+  <div class="form-group">
+    <label for="text">Comment</label>
+    <input class="form-control" type="text" id="text" name="comment[text]" value="<%= comment.text %>"><br>
+  </div>
+  <button class="btn btn-primary">Save!</button>
+</form>
+</div>
+
+<% include  ../partials/footer %>

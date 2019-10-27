@@ -1,11 +1,11 @@
 const express = require('express'),
-  router = express.Router({mergeParams: true}),
+  router = express.Router({ mergeParams: true }),
   Recipe = require('../models/recipe'),
   Comment = require('../models/comment');
 
-//================
-//COMMENTS ROUTES
-//================
+//=================================
+//COMMENTS ROUTES :::: recipe/:id/
+//=================================
 
 router.post('/', isLoggedIn, (req, res) => {
   //POST Comment
@@ -26,6 +26,43 @@ router.post('/', isLoggedIn, (req, res) => {
           res.redirect('/recipes/' + req.params.id + '#comment-section');
         }
       });
+    }
+  });
+});
+
+router.get('/comments/:comment_id/edit', (req, res) => {
+  Comment.findById(req.params.comment_id, (err, comment) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('comments/edit', {
+        comment: comment,
+        recipe_id: req.params.id
+      });
+    }
+  });
+});
+
+router.put('/comments/:comment_id', (req, res) => {
+  Comment.findByIdAndUpdate(
+    req.params.comment_id,
+    req.body.comment,
+    (err, comment) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.redirect('/recipes/' + req.params.id);
+      }
+    }
+  );
+});
+
+router.delete('/comments/:comment_id', (req, res) => {
+  Comment.findByIdAndRemove(req.params.comment_id, (err, comment) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/recipes/' + req.params.id);
     }
   });
 });

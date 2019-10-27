@@ -3,11 +3,11 @@
   <h1><%= recipe.name %></h1>
   <% if(currentUser && recipe.user.id.equals(currentUser._id)) { %>
   <div>
-    <a class="btn btn-primary svg-icon-holder" href="/recipes/<%= recipe._id %>/edit"><img class="svg-icon"
+    <a class="svg-icon-holder" href="/recipes/<%= recipe._id %>/edit"><img class="svg-icon"
         src="/assets/pencil-alt-solid.svg"></a>
   </div>
   <form class="inline-frm" action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
-    <button class="btn btn-danger svg-icon-holder"><img class="svg-icon" src="/assets/trash-solid.svg"></button>
+    <button class="svg-icon-holder"><img class="svg-icon" src="/assets/trash-solid.svg"></button>
   </form>
   <% } %>
 </div>
@@ -45,15 +45,26 @@
 </form>
 <hr>
 
+<!-- Display Comments -->
 <% for(let i = recipe.comments.length - 1; i >= 0; i--) { %>
 <div class="container">
   <div class="comment-header">
     <img class="rounded-circle" width=50 src="<%= recipe.comments[i].user.profilePic %>">
-    <h5 style="display: inline; margin:0" class="card-title"><%= recipe.comments[i].user.username %></h5>
+    <h5 style="display: inline; margin: 0 5px 0 5px" class="card-title"><%= recipe.comments[i].user.username %></h5>
     <% if (recipe.comments[i].isYoutube) { %>
     <div class="svg-icon-holder">
       <img class="svg-icon" src="/assets/youtube-brands.svg">
     </div>
+    <% } else { %>
+    <br>
+    <div class="svg-icon-holder-comm">
+      <a href="/recipes/<%= recipe._id %>/comments/<%= recipe.comments[i]._id %>/edit"><img class="svg-icon-comm"
+          src="/assets/pencil-alt-solid.svg"></a>
+    </div>
+    <form class="inline-frm" action="/recipes/<%= recipe._id %>/comments/<%= recipe.comments[i]._id %>?_method=DELETE"
+      method="POST">
+      <button class="svg-icon-holder-comm"><img class="svg-icon-comm" src="/assets/trash-solid.svg"></button>
+    </form>
     <% } %>
   </div>
   <p><%= recipe.comments[i].text %></p>
