@@ -1,13 +1,14 @@
 const express = require('express'),
   router = express.Router({ mergeParams: true }),
   Recipe = require('../models/recipe'),
-  Comment = require('../models/comment');
+  Comment = require('../models/comment'),
+  Middleware = require('../middleware');
 
 //=================================
 //COMMENTS ROUTES :::: recipe/:id/
 //=================================
 
-router.post('/', isLoggedIn, (req, res) => {
+router.post('/', Middleware.isLoggedIn, (req, res) => {
   //POST Comment
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) {
@@ -30,7 +31,7 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
-router.get('/comments/:comment_id/edit', checkCommentAuth, (req, res) => {
+router.get('/comments/:comment_id/edit', Middleware.commentAuth, (req, res) => {
   Comment.findById(req.params.comment_id, (err, comment) => {
     if (err) {
       console.log(err);
@@ -57,7 +58,7 @@ router.put('/comments/:comment_id', (req, res) => {
   );
 });
 
-router.delete('/comments/:comment_id', checkCommentAuth, (req, res) => {
+router.delete('/comments/:comment_id', Middleware.commentAuth, (req, res) => {
   Comment.findByIdAndRemove(req.params.comment_id, (err, comment) => {
     if (err) {
       console.log(err);
@@ -66,30 +67,5 @@ router.delete('/comments/:comment_id', checkCommentAuth, (req, res) => {
     }
   });
 });
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
-
-function checkCommentAuth(req, res, next) {
-  if (req.isAuthenticated()) {
-    Comment.findById(req.params.comment_id, (err, comment) => {
-      if (err) {
-        res.redirect('back');
-      } else {
-        if (comment.user.id.equals(req.user._id)) {
-          next();
-        } else {
-          res.redirect('back');
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-}
 
 module.exports = router;

@@ -1,0 +1,9 @@
+.ytURLModal {
+  color: #007bff !important;
+  text-decoration: none !important;
+}
+.ytURLModal:hover {
+  color: #0056b3 !important;
+  text-decoration: underline !important;
+  cursor: pointer;
+}

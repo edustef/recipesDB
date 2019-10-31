@@ -3,9 +3,9 @@ const express = require('express'),
   passport = require('passport'),
   User = require('../models/user');
 
-//======================
-//AUTHENTICATION ROUTES
-//======================
+//=============================
+//AUTHENTICATION ROUTES :::: /
+//=============================
 
 router.get('/register', (req, res) => {
   res.render('user/register');
@@ -42,14 +42,8 @@ router.post(
 
 router.get('/logout', (req, res) => {
   req.logout();
+  req.flash('success', 'You logged out!');
   res.redirect('/recipes');
 });
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
 
 module.exports = router;

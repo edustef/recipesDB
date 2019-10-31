@@ -1,4 +1,6 @@
 <% include  ../partials/header.ejs %>
+<link rel="stylesheet" type="text/css" href="/css/show.css">
+
 <div class="recipe-title">
   <h1><%= recipe.name %></h1>
   <% if(currentUser && recipe.user.id.equals(currentUser._id)) { %>

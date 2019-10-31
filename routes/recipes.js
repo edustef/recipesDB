@@ -2,23 +2,26 @@ const express = require('express'),
   router = express.Router(),
   Recipe = require('../models/recipe'),
   Comment = require('../models/recipe'),
-  seeds = require('../seeds');
+  Seeds = require('../seeds'),
+  Middleware = require('../middleware');
 
-//================
-//RECIPES ROUTES
-//================
+//=============================
+//RECIPES ROUTES :::: /recipes
+//=============================
 
+//HOME ROUTE
 router.get('/', (req, res) => {
   Recipe.find({}, (err, recipes) => {
     if (err) {
-      console.error('No recipes found');
+      console.error(err);
     } else {
       res.render('index', { recipes: recipes });
     }
   });
 });
 
-router.post('/', isLoggedIn, async (req, res) => {
+// POSTING A RECIPE
+router.post('/', Middleware.isLoggedIn, async (req, res) => {
   user = {
     id: req.user._id,
     username: req.user.username
@@ -27,14 +30,16 @@ router.post('/', isLoggedIn, async (req, res) => {
   body = req.body.recipe;
   body.user = user;
 
-  await seeds(body);
+  await Seeds(body);
   res.redirect('/recipes');
 });
 
-router.get('/new', isLoggedIn, (req, res) => {
+//NEW PAGE FOR RECIPE CREATION
+router.get('/new', Middleware.isLoggedIn, (req, res) => {
   res.render('recipes/new');
 });
 
+//SHOW RECIPE PAGE
 router.get('/:id', (req, res) => {
   Recipe.findById(req.params.id)
     .populate('comments')
@@ -47,7 +52,8 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.get('/:id/edit', checkAuth, (req, res) => {
+//EDIT RECIPE PAGE
+router.get('/:id/edit', Middleware.auth, (req, res) => {
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) {
       res.redirect('/recipes');
@@ -57,7 +63,8 @@ router.get('/:id/edit', checkAuth, (req, res) => {
   });
 });
 
-router.put('/:id', checkAuth, (req, res) => {
+//UPDATE RECIPE
+router.put('/:id', Middleware.auth, (req, res) => {
   Recipe.findByIdAndUpdate(req.params.id, req.body.recipe, (err, recipe) => {
     if (err) {
       res.redirect('/recipes');
@@ -67,7 +74,9 @@ router.put('/:id', checkAuth, (req, res) => {
   });
 });
 
-router.delete('/:id', checkAuth, (req, res) => {
+
+//DELETE RECIPE
+router.delete('/:id', Middleware.auth, (req, res) => {
   //Delete post and  it's comments from db
   Recipe.findByIdAndRemove(req.params.id, (err, recipe) => {
     if (err) {
@@ -84,30 +93,5 @@ router.delete('/:id', checkAuth, (req, res) => {
     res.redirect('/recipes');
   });
 });
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
-
-function checkAuth(req, res, next) {
-  if (req.isAuthenticated()) {
-    Recipe.findById(req.params.id, (err, recipe) => {
-      if (err) {
-        res.redirect('back');
-      } else {
-        if (recipe.user.id.equals(req.user._id)) {
-          next();
-        } else {
-          res.redirect('back');
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-}
 
 module.exports = router;
