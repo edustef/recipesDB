@@ -1,6 +1,6 @@
 const yt = require('./yt'),
-  Recipe = require('../../models/recipe'),
-  Comment = require('../../models/comment');
+  Recipe = require('./models/recipe'),
+  Comment = require('./models/comment');
 
 const seeds = async body => {
   if (body.ytURL) {
