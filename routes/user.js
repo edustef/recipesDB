@@ -16,10 +16,11 @@ router.post('/register', (req, res) => {
     req.body.password,
     (err, user) => {
       if (err) {
-        console.log(err);
+        req.flash('error', err.message);
         return res.render('user/register');
       }
       passport.authenticate('local')(req, res, () => {
+        req.flash('success', 'Welcome to RecipesDB ' + user.username);
         res.redirect('/recipes');
       });
     }
@@ -29,6 +30,7 @@ router.post('/register', (req, res) => {
 router.get('/login', (req, res) => {
   res.render('user/login');
 });
+
 router.post(
   '/login',
   passport.authenticate('local', {
@@ -36,7 +38,7 @@ router.post(
     failureRedirect: '/login'
   }),
   (req, res) => {
-    res.send('logged in');
+    req.flash('success', 'Welcome back ' + user.username);
   }
 );
 

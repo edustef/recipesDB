@@ -74,7 +74,6 @@ router.put('/:id', Middleware.auth, (req, res) => {
   });
 });
 
-
 //DELETE RECIPE
 router.delete('/:id', Middleware.auth, (req, res) => {
   //Delete post and  it's comments from db
