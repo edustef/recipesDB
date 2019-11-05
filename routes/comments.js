@@ -12,6 +12,7 @@ const express = require('express'),
 router.post('/', Middleware.isLoggedIn, (req, res) => {
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) {
+      req.flash('error', 'Something went wrong!');
       console.log(err);
     } else {
       Comment.create(req.body.comment, (err, comment) => {
@@ -53,8 +54,10 @@ router.put('/comments/:comment_id', (req, res) => {
     req.body.comment,
     (err, comment) => {
       if (err) {
+        req.flash('error', 'Something went wrong!');
         console.log(err);
       } else {
+        req.flash('success', 'Comment updated successfully!');
         res.redirect('/recipes/' + req.params.id);
       }
     }
@@ -65,8 +68,10 @@ router.put('/comments/:comment_id', (req, res) => {
 router.delete('/comments/:comment_id', Middleware.commentAuth, (req, res) => {
   Comment.findByIdAndRemove(req.params.comment_id, (err, comment) => {
     if (err) {
+      req.flash('error', 'Something went wrong!');
       console.log(err);
     } else {
+      req.flash('success', 'Comment deleted successfully!');
       res.redirect('/recipes/' + req.params.id);
     }
   });

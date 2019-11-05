@@ -7,10 +7,11 @@ const Recipe = require('../models/recipe'),
 
 module.exports.isLoggedIn = function(req, res, next) {
   if (req.isAuthenticated()) {
-    return next();
+    next();
+  } else {
+    req.flash('error', 'You need to be logged in to do that!');
+    res.redirect('/login');
   }
-  req.flash('error', 'You need to be logged in to do that!');
-  res.redirect('/login');
 };
 
 module.exports.auth = function(req, res, next) {
@@ -21,17 +22,16 @@ module.exports.auth = function(req, res, next) {
         res.redirect('back');
       } else {
         if (recipe.user.id.equals(req.user._id)) {
-          res.redirect('back');
           next();
         } else {
           req.flash('error', 'Permission Denied!');
-          res.redirect('back');
+          res.redirect('/recipes/' + req.params.id);
         }
       }
     });
   } else {
     req.flash('error', 'You need to be logged in to do that!');
-    res.redirect('back');
+    res.redirect('/recipes/' + req.params.id);
   }
 };
 

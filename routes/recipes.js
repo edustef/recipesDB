@@ -45,7 +45,8 @@ router.get('/:id', (req, res) => {
     .populate('comments')
     .exec((err, recipe) => {
       if (err) {
-        console.log('Failed to fetch id!');
+        req.flash('error', 'Recipe not found!');
+        res.redirect('/recipes');
       } else {
         res.render('recipes/show', { recipe: recipe });
       }
@@ -56,6 +57,7 @@ router.get('/:id', (req, res) => {
 router.get('/:id/edit', Middleware.auth, (req, res) => {
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) {
+      req.flash('error', 'Recipe not found!');
       res.redirect('/recipes');
     } else {
       res.render('recipes/edit', { recipe: recipe });
@@ -67,6 +69,7 @@ router.get('/:id/edit', Middleware.auth, (req, res) => {
 router.put('/:id', Middleware.auth, (req, res) => {
   Recipe.findByIdAndUpdate(req.params.id, req.body.recipe, (err, recipe) => {
     if (err) {
+      req.flash('error', 'Recipe not found!');
       res.redirect('/recipes');
     } else {
       res.redirect('/recipes/' + req.params.id);
@@ -79,12 +82,14 @@ router.delete('/:id', Middleware.auth, (req, res) => {
   //Delete post and  it's comments from db
   Recipe.findByIdAndRemove(req.params.id, (err, recipe) => {
     if (err) {
-      console.log(err);
+      req.flash('error', 'Recipe not found!');
+      res.redirect('/recipes');
     } else {
       for (let i = 0; i < recipe.comments.length; i++) {
         Comment.findByIdAndRemove(recipe.comments[i]._id, err => {
           if (err) {
-            console.log(err);
+            req.flash('error', 'Comment not found!');
+            res.redirect('/recipes');
           }
         });
       }
