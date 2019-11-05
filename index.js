@@ -12,9 +12,24 @@ const commentRoutes = require('./routes/comments'),
   userRoutes = require('./routes/user');
 
 require('dotenv').config();
+
 const app = express();
 
-mongoose.connect('mongodb://localhost/recipesdb', { useNewUrlParser: true });
+const PORT = process.env.PORT || 5000;
+const CONNECTION_URL =
+  process.env.MONGODB_URI || 'mongodb://localhost/recipesdb';
+
+mongoose
+  .connect(CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log('Connected to DB');
+  })
+  .catch(err => {
+    console.error(err);
+  });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
@@ -51,6 +66,6 @@ app.use('/recipes', recipeRoutes);
 app.use('/recipes/:id', commentRoutes);
 app.use(userRoutes);
 
-app.listen(process.env.PORT || 5000, () => {
+app.listen(PORT || 5000, () => {
   console.log('Server is running!');
 });
