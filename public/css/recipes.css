@@ -24,3 +24,7 @@
 .card-img-top:hover {
   opacity: 0.9;
 }
+
+.card-body > a {
+  display: block;
+}

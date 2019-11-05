@@ -1,6 +1,17 @@
 <% include  ../partials/header.ejs %>
 <link rel="stylesheet" type="text/css" href="/css/show.css">
 
+<!-- SHOW VIDEO IF POST WAS DONE VIA YOUTUBE! -->
+<% if (recipe.ytId) { %>
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item video" src="https://www.youtube.com/embed/<%= recipe.ytId %>"
+    allowfullscreen></iframe>
+</div>
+<% } %>
+<h2 id="comment-section">Comments</h2>
+
+<hr>
+
 <div class="recipe-title">
   <h1><%= recipe.name %></h1>
   <% if(currentUser && recipe.user.id.equals(currentUser._id)) { %>
@@ -19,15 +30,6 @@
 <p><%= recipe.desc %></p>
 <hr>
 
-<!-- SHOW VIDEO IF POST WAS DONE VIA YOUTUBE! -->
-<% if (recipe.ytId) { %>
-<div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item video" src="https://www.youtube.com/embed/<%= recipe.ytId %>"
-    allowfullscreen></iframe>
-</div>
-<% } %>
-<h2 id="comment-section">Comments</h2>
-<hr>
 
 <!-- POST COMMENT -->
 <form action="/recipes/<%= recipe._id %>" method="POST">
