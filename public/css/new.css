@@ -7,3 +7,7 @@
   text-decoration: underline !important;
   cursor: pointer;
 }
+
+.modal-footer > a {
+  margin-right: auto !important;
+}
