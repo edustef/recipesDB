@@ -14,29 +14,35 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/"><img class="img-responsive" src="/assets/fork_logo.png">RecipesDB</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/"><strong>RecipesDB</strong></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
       aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
       <a class="nav-link mr-auto" href="/recipes/new">Add new recipe</a>
+      <hr class="nav-hr">
       <% if(!currentUser) { %>
       <a class="nav-link" href="/register">Register</a>
+      <hr class="nav-hr">
       <a class="nav-link" href="/login">Login</a>
+      <hr class="nav-hr">
       <% } else { %>
-      <a href="/user/:id"><img class="rounded-circle" width=35 src="<%= currentUser.profilePic %>"></a>
-      <a class="nav-link" href="/user/:id">Signed in as <%= currentUser.username %></a>
+      <a href="/user/:id"><img class="rounded-circle" width=35 src="<%= currentUser.profilePic %>">
+        Signed in as <%= currentUser.username %></a>
+      <hr class="nav-hr">
       <a class="nav-link" href="/logout">Logout</a>
+      <hr class="nav-hr">
       <% } %>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <form class="search-box">
+        <input class="search-txt" type="search" placeholder="Search">
+        <button class="search-btn" type="submit"><img width=20 src="/assets/search-solid.svg"></button>
+
       </form>
     </div>
   </nav>
-  <div class="container">
+  <div class=" container">
     <% if (error && error.length > 0) { %>
     <div class="alert alert-danger" role="alert"><%= error %></div>
     <% } else if (success && success.length > 0) {%>

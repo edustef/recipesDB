@@ -19,7 +19,7 @@ hr {
 }
 
 .btn {
-  border-radius: 100px 100px 100px 100px;
+  border-radius: 100px;
 }
 
 .img-responsive {
@@ -28,35 +28,58 @@ hr {
   max-width: 1.4em;
   filter: invert(100%);
 }
+
+.navbar {
+  width: 90%;
+  margin: 10px auto;
+  border: none;
+  border-radius: 25px;
+  box-shadow: var(--shadow);
+}
 .navbar a {
-  color: white;
+  color: black;
+}
+.nav-link {
+  padding: 8px 0;
 }
 .navbar a:hover {
   color: gray;
+  text-decoration: none;
 }
 .navbar + .container {
   padding-top: 32px;
 }
 
-header {
-  margin-bottom: 32px;
+.search-txt {
+  border: none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 0;
+  line-height: 40px;
+  transition: 0.4s;
+  width: 0px;
 }
-header .jumbotron,
-.full-page {
-  color: white;
-  text-shadow: var(--shadow);
+.search-txt {
+  width: 240px;
 }
-header .jumbotron h1 {
-  font-weight: bold;
+.search-btn {
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
 }
-header .jumbotron p {
-  font-weight: lighter;
-  font-size: 1.18rem;
-}
-header .bg-img {
-  background-image: url(https://i.imgur.com/8r9FoHZ.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: right;
-  box-shadow: var(--shadow);
+
+@media only screen and (min-width: 992px) {
+  .nav-hr {
+    display: none;
+  }
+  .nav-link {
+    padding: 8px 16px;
+  }
+  .search-txt {
+    width: 0;
+  }
+  .search-box:hover > .search-txt {
+    width: 240px;
+    padding: 0 6px;
+  }
 }

@@ -1,14 +1,13 @@
 <% include  partials/header.ejs %>
 <link rel="stylesheet" type="text/css" href="/css/recipes.css">
-
-<header>
+<div class="parallax-cont">
   <div class="jumbotron bg-img">
     <div class="container">
       <h1>Welcome to <img class="img-responsive logo" src="/assets/fork_logo.png">RecipesDB!</h1>
       <p>View our hand-picked delicious recipes!</p>
     </div>
   </div>
-</header>
+</div>
 <div class="container">
   <div class="row">
     <% recipes.forEach(recipe => { %>
