@@ -14,6 +14,15 @@ module.exports.isLoggedIn = function(req, res, next) {
   }
 };
 
+module.exports.isNotLoggedIn = function(req, res, next) {
+  if (req.isAuthenticated()) {
+    req.flash('error', 'You need to be logged out to do that!');
+    res.redirect('/recipes');
+  } else {
+    next();
+  }
+};
+
 module.exports.auth = function(req, res, next) {
   if (req.isAuthenticated()) {
     Recipe.findById(req.params.id, (err, recipe) => {
