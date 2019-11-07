@@ -36,8 +36,9 @@ hr {
   border-radius: 25px;
   box-shadow: var(--shadow);
 }
+
 .navbar a {
-  color: black;
+  color: #282828;
 }
 .nav-link {
   padding: 8px 0;
@@ -48,6 +49,12 @@ hr {
 }
 .navbar + .container {
   padding-top: 32px;
+}
+
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .search-txt {
@@ -64,6 +71,7 @@ hr {
   width: 240px;
 }
 .search-btn {
+  border: none;
   border-radius: 50%;
   background-color: rgb(255, 255, 255);
 }
@@ -79,6 +87,10 @@ hr {
     width: 0;
   }
   .search-box:hover > .search-txt {
+    width: 240px;
+    padding: 0 6px;
+  }
+  .search-box > .search-txt:focus {
     width: 240px;
     padding: 0 6px;
   }
