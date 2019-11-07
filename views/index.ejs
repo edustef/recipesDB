@@ -18,8 +18,7 @@
         </a>
         <div class="card-body">
           <h5 class="card-title"><a class="no-decor-link" href="/recipes/<%= recipe._id %>"><%= recipe.name %></a></h5>
-          <a class="btn btn-info btn-sm" href=<%= recipe.article %>>See original
-            article</a>
+          <a class="btn btn-info btn-sm" href="/recipes/<%= recipe._id %>">See article</a>
           <small>Posted by <%= recipe.user.username %></small>
         </div>
       </div>

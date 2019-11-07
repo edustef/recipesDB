@@ -7,6 +7,13 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+.navbar-light .navbar-toggler,
+.navbar-toggler:hover,
+.navbar-toggler:focus {
+  border-color: transparent;
+  outline: none;
+}
+
 hr {
   border: 0;
   height: 1px;
