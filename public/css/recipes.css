@@ -1,3 +1,25 @@
+.bg-img {
+  background-image: url(https://i.imgur.com/8r9FoHZ.jpg);
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: right;
+  box-shadow: inset var(--shadow);
+  color: white;
+  text-shadow: var(--shadow);
+  margin-bottom: 32px;
+}
+
+.bg-img h1 {
+  font-weight: bold;
+}
+.bg-img p {
+  font-weight: lighter;
+  font-size: 1.18rem;
+}
+
 .no-decor-link {
   color: black;
 }

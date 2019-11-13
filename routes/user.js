@@ -1,13 +1,14 @@
 const express = require('express'),
   router = express.Router(),
   passport = require('passport'),
+  Middleware = require('../middleware'),
   User = require('../models/user');
 
 //=============================
 //AUTHENTICATION ROUTES :::: /
 //=============================
 
-router.get('/register', (req, res) => {
+router.get('/register', Middleware.isNotLoggedIn, (req, res) => {
   res.render('user/register');
 });
 router.post('/register', (req, res) => {
@@ -27,7 +28,7 @@ router.post('/register', (req, res) => {
   );
 });
 
-router.get('/login', (req, res) => {
+router.get('/login', Middleware.isNotLoggedIn, (req, res) => {
   res.render('user/login');
 });
 
@@ -46,6 +47,10 @@ router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success', 'You logged out!');
   res.redirect('/recipes');
+});
+
+router.get('/user/:id', (req, res) => {
+  res.render('user/user');
 });
 
 module.exports = router;

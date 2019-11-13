@@ -23,7 +23,7 @@
     allowfullscreen></iframe>
 </div>
 <% } %>
-<p><%= recipe.desc %></p>
+<p class="par-desc"><%= recipe.desc %></p>
 <hr>
 
 <h2 id="comment-section">Comments</h2>
@@ -40,7 +40,7 @@
     <% } else { %>
     <div class="post-com-header"><strong><a href="/login">Login</a> to post comment!</strong></div>
     <% } %>
-    <textarea class="form-control" required id="comment" name="comment[text]" rows="3"
+    <textarea class="form-control" required id="comment" name="comment[text]" rows="4"
       placeholder="Type your comment here..."></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Post comment</button>
