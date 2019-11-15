@@ -1,6 +1,6 @@
 <% include  partials/header.ejs %>
 <link rel="stylesheet" type="text/css" href="/css/recipes.css">
-<div class="parallax-cont">
+<div>
   <div class="jumbotron bg-img">
     <div class="container">
       <h1>Welcome to <img class="img-responsive logo" src="/assets/fork_logo.png">RecipesDB!</h1>
@@ -8,6 +8,12 @@
     </div>
   </div>
 </div>
+<% if (search_query) { %>
+<div class="container mb-4">
+  <h1 style="font-size: 2rem">Search Result for: <%= search_query %></h1>
+  <strong><a href="/recipes">Clear query</a></strong>
+</div>
+<% } %>
 <div class="container">
   <div class="row">
     <% recipes.forEach(recipe => { %>

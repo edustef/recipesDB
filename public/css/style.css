@@ -75,15 +75,18 @@ hr {
   width: 0px;
 }
 .search-txt {
-  width: 240px;
+  width: 220px;
 }
 .search-btn {
   border: none;
   border-radius: 50%;
-  background-color: rgb(255, 255, 255);
+  background-color: #f8f9fa;
 }
 
 @media only screen and (min-width: 992px) {
+  .navbar {
+    width: 90%;
+  }
   .nav-hr {
     display: none;
   }
@@ -100,5 +103,17 @@ hr {
   .search-box > .search-txt:focus {
     width: 240px;
     padding: 0 6px;
+  }
+}
+
+@media only screen and (min-width: 1080px) {
+  .navbar {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 1350px) {
+  .navbar {
+    width: 70%;
   }
 }

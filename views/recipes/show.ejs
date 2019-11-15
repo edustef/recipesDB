@@ -1,6 +1,5 @@
 <% include  ../partials/header.ejs %>
 <link rel="stylesheet" type="text/css" href="/css/show.css">
-
 <div class="recipe-title">
   <h1><%= recipe.name %></h1>
   <% if(currentUser && recipe.user.id.equals(currentUser._id)) { %>
@@ -48,6 +47,9 @@
 <hr>
 
 <!-- Display Comments -->
+<% if (recipe.comments.length < 1) { %>
+<p style="text-align: center; color:gray;"><strong>No comments yet :( Be the first to post a comment!</strong></p>
+<% } %>
 <% for(let i = recipe.comments.length - 1; i >= 0; i--) { %>
 <div class="container">
   <div class="comment-header">

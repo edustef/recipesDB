@@ -25,6 +25,11 @@
   letter-spacing: 0.15rem;
 }
 
+.img-cont {
+  width: 100%;
+  height: 200px;
+}
+
 .recipe-title {
   display: flex;
   align-items: center;

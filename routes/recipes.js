@@ -1,5 +1,6 @@
 const express = require('express'),
   router = express.Router(),
+  Fuse = require('fuse.js'),
   Recipe = require('../models/recipe'),
   Comment = require('../models/recipe'),
   Seeds = require('../seeds'),
@@ -11,13 +12,37 @@ const express = require('express'),
 
 //HOME ROUTE
 router.get('/', (req, res) => {
-  Recipe.find({}, (err, recipes) => {
-    if (err) {
-      console.error(err);
-    } else {
-      res.render('index', { recipes: recipes });
-    }
-  });
+  if (Object.entries(req.query).length === 0) {
+    Recipe.find({}, (err, recipes) => {
+      if (err) {
+        console.error(err);
+      } else {
+        res.render('index', { recipes: recipes, search_query: undefined });
+      }
+    });
+  } else {
+    Recipe.find({}, (err, recipes) => {
+      if (err) {
+        console.error(err);
+      } else {
+        var options = {
+          shouldSort: true,
+          threshold: 0.6,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['name']
+        };
+        var fuse = new Fuse(recipes, options); // "list" is the item array
+        var results = fuse.search(req.query.query);
+        res.render('index', {
+          recipes: results,
+          search_query: req.query.query
+        });
+      }
+    });
+  }
 });
 
 // POSTING A RECIPE
@@ -30,6 +55,7 @@ router.post('/', Middleware.isLoggedIn, async (req, res) => {
   body = req.body.recipe;
   body.user = user;
 
+  console.log(body);
   await Seeds(body);
   res.redirect('/recipes');
 });

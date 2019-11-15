@@ -30,16 +30,15 @@
       <a class="nav-link" href="/login">Login</a>
       <hr class="nav-hr">
       <% } else { %>
-      <a href="/user/:id"><img class="rounded-circle" width=35 src="<%= currentUser.profilePic %>">
+      <a href="/user/<%= currentUser._id %>"><img class="rounded-circle" width=35 src="<%= currentUser.profilePic %>">
         Signed in as <%= currentUser.username %></a>
       <hr class="nav-hr">
       <a class="nav-link" href="/logout">Logout</a>
       <hr class="nav-hr">
       <% } %>
-      <form class="search-box">
-        <input class="search-txt" type="search" placeholder="Search">
+      <form class="search-box" action="/recipes" method="GET">
+        <input class="search-txt" type="search" placeholder="Search" id="query" name="query">
         <button class="search-btn" type="submit"><img width=20 src="/assets/search-solid.svg"></button>
-
       </form>
     </div>
   </nav>
