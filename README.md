@@ -5,7 +5,7 @@
 ## Description
 This is a project that is sort of a follow along with Colt Steel's course on udemy. His course is about camps mine is about recipes of food.
 
-## The Stack
+## Dependencies
 
 - "express": "^4.17.1",
 - "mongoose": "^5.7.7",
