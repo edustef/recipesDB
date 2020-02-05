@@ -1,80 +1,22 @@
 const express = require('express'),
   router = express.Router({ mergeParams: true }),
-  Recipe = require('../models/recipe'),
-  Comment = require('../models/comment'),
-  Middleware = require('../controllers');
+  commController = require('../controllers/commController'),
+  authController = require('../controllers/authController');
 
 //=================================
 //COMMENTS ROUTES :::: recipe/:id/
 //=================================
 
-//POST COMMENT
-router.post('/comments', Middleware.isLoggedIn, (req, res) => {
-  Recipe.findById(req.params.id, (err, recipe) => {
-    if (err) {
-      req.flash('error', 'Something went wrong!');
-      console.log(err);
-    } else {
-      Comment.create(req.body.comment, (err, comment) => {
-        if (err) {
-          req.flash('error', 'Something went wrong!');
-        } else {
-          comment.user.username = req.user.username;
-          comment.user.id = req.user._id;
-          comment.user.profilePic = req.user.profilePic;
-          comment.save();
-          recipe.comments.push(comment);
-          recipe.save();
-          req.flash('success', 'Successfully added comment!');
-          res.redirect('/recipes/' + req.params.id + '#comment-section');
-        }
-      });
-    }
-  });
-});
+//GET COMMENT 
+router.get( '/comments/:comment_id/edit', authController.commentAuth, commController.getComment);
 
-//DISPLAY COMMENT EDIT
-router.get('/comments/:comment_id/edit', Middleware.commentAuth, (req, res) => {
-  Comment.findById(req.params.comment_id, (err, comment) => {
-    if (err) {
-      req.flash('error', 'Something went wrong!');
-    } else {
-      res.render('comments/edit', {
-        comment: comment,
-        recipe_id: req.params.id
-      });
-    }
-  });
-});
+//POST COMMENT
+router.post('/comments', authController.isLoggedIn, commController.postComment);
 
 //UPDATE COMMENT
-router.put('/comments/:comment_id', (req, res) => {
-  Comment.findByIdAndUpdate(
-    req.params.comment_id,
-    req.body.comment,
-    (err, comment) => {
-      if (err) {
-        req.flash('error', 'Something went wrong!');
-        console.log(err);
-      } else {
-        req.flash('success', 'Comment updated successfully!');
-        res.redirect('/recipes/' + req.params.id);
-      }
-    }
-  );
-});
+router.put('/comments/:comment_id', commController.updateComment);
 
 //DELETE A COMMENT
-router.delete('/comments/:comment_id', Middleware.commentAuth, (req, res) => {
-  Comment.findByIdAndRemove(req.params.comment_id, (err, comment) => {
-    if (err) {
-      req.flash('error', 'Something went wrong!');
-      console.log(err);
-    } else {
-      req.flash('success', 'Comment deleted successfully!');
-      res.redirect('/recipes/' + req.params.id);
-    }
-  });
-});
+router.delete('/comments/:comment_id', authController.commentAuth, commController.deleteComment);
 
 module.exports = router;
