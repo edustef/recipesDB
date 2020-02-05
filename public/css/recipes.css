@@ -8,7 +8,7 @@
   background-position: right;
   box-shadow: inset var(--shadow);
   color: white;
-  text-shadow: var(--shadow);
+  text-shadow: 6px 6px 6px rgba(0, 0, 0, 0.15);
   margin-bottom: 32px;
 }
 

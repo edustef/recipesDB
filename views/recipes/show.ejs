@@ -29,7 +29,7 @@
 <hr>
 
 <!-- POST COMMENT -->
-<form action="/recipes/<%= recipe._id %>" method="POST">
+<form action="/recipes/<%= recipe._id %>/comments" method="POST">
   <div class="form-group">
     <% if(currentUser) { %>
     <div class="post-com-header">

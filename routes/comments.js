@@ -2,14 +2,14 @@ const express = require('express'),
   router = express.Router({ mergeParams: true }),
   Recipe = require('../models/recipe'),
   Comment = require('../models/comment'),
-  Middleware = require('../middleware');
+  Middleware = require('../controllers');
 
 //=================================
 //COMMENTS ROUTES :::: recipe/:id/
 //=================================
 
 //POST COMMENT
-router.post('/', Middleware.isLoggedIn, (req, res) => {
+router.post('/comments', Middleware.isLoggedIn, (req, res) => {
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) {
       req.flash('error', 'Something went wrong!');

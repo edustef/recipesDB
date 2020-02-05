@@ -4,7 +4,7 @@ const express = require('express'),
   Recipe = require('../models/recipe'),
   Comment = require('../models/recipe'),
   Seeds = require('../seeds'),
-  Middleware = require('../middleware');
+  Middleware = require('../controllers');
 
 //=============================
 //RECIPES ROUTES :::: /recipes

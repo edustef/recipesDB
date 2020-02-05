@@ -1,10 +1,10 @@
 :root {
-  --shadow: 2px 3px 6px rgba(0, 0, 0, 0.25);
+  --shadow: 6px 6px 6px rgba(0, 0, 0, 0.15), -6px -6px 6px rgb(255, 255, 255);
 }
 
 body {
-  background-color: #f7f7f7;
-  font-family: 'Nunito', sans-serif;
+  background-color: #f1f1f1;
+  font-family: "Nunito", sans-serif;
 }
 
 .navbar-light .navbar-toggler,
@@ -27,6 +27,7 @@ hr {
 
 .btn {
   border-radius: 100px;
+  box-shadow: var(--shadow);
 }
 
 .img-responsive {
