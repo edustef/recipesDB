@@ -1,14 +1,14 @@
 const express = require('express'),
   router = express.Router(),
   passport = require('passport'),
-  Middleware = require('../controllers'),
+  authController = require('../controllers/authController'),
   User = require('../models/user');
 
 //=============================
 //AUTHENTICATION ROUTES :::: /
 //=============================
 
-router.get('/register', Middleware.isNotLoggedIn, (req, res) => {
+router.get('/register', authController.isNotLoggedIn, (req, res) => {
   res.render('user/register');
 });
 router.post('/register', (req, res) => {
@@ -28,7 +28,7 @@ router.post('/register', (req, res) => {
   );
 });
 
-router.get('/login', Middleware.isNotLoggedIn, (req, res) => {
+router.get('/login', authController.isNotLoggedIn, (req, res) => {
   res.render('user/login');
 });
 

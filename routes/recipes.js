@@ -1,5 +1,6 @@
 const express = require('express'),
   router = express.Router(),
+  authController = require('../controllers/authController'),
   recipeController = require('../controllers/recipeController');
 
 //=============================
@@ -10,10 +11,10 @@ const express = require('express'),
 router.get('/', recipeController.getRecipes);
 
 // POSTING A RECIPE
-router.post('/', Middleware.isLoggedIn, recipeController.postRecipe);
+router.post('/', authController.isLoggedIn, recipeController.postRecipe);
 
 //NEW PAGE FOR RECIPE CREATION
-router.get('/new', Middleware.isLoggedIn, (req, res) => {
+router.get('/new', authController.isLoggedIn, (req, res) => {
   res.render('recipes/new');
 });
 
@@ -21,12 +22,12 @@ router.get('/new', Middleware.isLoggedIn, (req, res) => {
 router.get('/:id', recipeController.getRecipe);
 
 //EDIT RECIPE PAGE
-router.get('/:id/edit', Middleware.auth, recipeController.getUpdateRecipe);
+router.get('/:id/edit', authController.auth, recipeController.getUpdateRecipe);
 
 //UPDATE RECIPE
-router.put('/:id', Middleware.auth, recipeController.updateRecipe);
+router.put('/:id', authController.auth, recipeController.updateRecipe);
 
 //DELETE RECIPE
-router.delete('/:id', Middleware.auth, recipeController.deleteRecipe);
+router.delete('/:id', authController.auth, recipeController.deleteRecipe);
 
 module.exports = router;
